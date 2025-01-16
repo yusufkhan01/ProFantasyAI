@@ -1,0 +1,13 @@
+Goal: Create an application which can track FC25 player prices live and provide insights on buying/selling
+
+Plan: 
+1. Research API's which could help get player data
+2. Decide which softwares to use for frontend, backend, database, websockets (for live updates)
+3. List all potential features that can be implemented
+4. Design a UI and potential components
+5. Develop the application
+6. Extensively test/review
+7. Deploy the application with its own domain
+8. Market it for use
+9. Potential Monetization with ads
+10. Repeat 5-8 for extra features or ideas
