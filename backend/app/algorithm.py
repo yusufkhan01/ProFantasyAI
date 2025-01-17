@@ -16,6 +16,6 @@ def calculate_value_score(player):
 
 
     # Combine weighted components
-    value_score = (0.35 * points_per_cost) +(0.3 * form) + (0.25 * points_per_game) + (0.1 * ict_index)
+    value_score = (0.45 * points_per_cost) +(0.25 * form) + (0.2 * points_per_game) + (0.1 * ict_index)
 
     return value_score

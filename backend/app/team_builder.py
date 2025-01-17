@@ -46,7 +46,8 @@ def build_best_team(players):
         if len(team) == 15:
             break
         
-        budget = 1000.0 - total_budget
+    budget = 1000.0 - total_budget
+        
     return team, budget
 
 
