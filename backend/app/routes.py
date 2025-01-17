@@ -1,5 +1,5 @@
 from flask import jsonify, request
-from app.fpl_api import (
+from fpl_api import (
     fetch_all_players, fetch_fixtures, fetch_player_summary,
     fetch_gameweek_stats, fetch_manager_info, fetch_manager_history,
     fetch_manager_transfers, fetch_manager_picks, fetch_league_standings

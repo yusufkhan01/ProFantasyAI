@@ -1,29 +1,26 @@
 import requests
+import pandas as pd
 
-BASE_URL = "https://fantasy.premierleague.com/api"
+BASE_URL = "https://fantasy.premierleague.com/api/"
 
-def fetch_all_players():
-    """Fetch all players, teams, and global gameweek summaries."""
-    response = requests.get(f"{BASE_URL}/bootstrap-static/")
-    return response.json()
+r = requests.get(BASE_URL+'bootstrap-static/').json()
 
 def fetch_player_data():
-    data = fetch_all_players()
-    players = []
+    # Extract player elements from the data
+    players = r['elements']
     
-    for player in data['elements']:
-        players.append({
-            "id": player["id"],
-            "name": player["web_name"],
-            "team": player["team"],
-            "position": player["element_type"],  # 1 = GK, 2 = DEF, 3 = MID, 4 = FWD
-            "price": player["now_cost"] / 10.0,  # price in millions
-            "form": player["form"],  # Current form
-            "total_points": player["total_points"],  # Total points scored
-        })
+    # Convert to DataFrame
+    players_df = pd.DataFrame(players)
     
-    return players
-
+    # Add position and team data to the DataFrame (assuming teams and positions are already fetched)
+    # Convert the DataFrame to a list of dictionaries (instead of DataFrame)
+    players_list = players_df.to_dict(orient='records')
+    
+    # Fetch team and position data (assuming already defined or fetched previously)
+    teams = r['teams']  # Teams data from API
+    positions = r['element_types']  # Position data from API
+    
+    return players_list, teams, positions
 
 def fetch_fixtures():
     """Fetch all fixtures for the season."""
@@ -31,7 +28,7 @@ def fetch_fixtures():
     return response.json()
 
 def fetch_player_summary(eid):
-    """Fetch a player's remaining and past fixtures."""
+    """Fetch a player's remaining fixtures."""
     response = requests.get(f"{BASE_URL}/element-summary/{eid}/")
     return response.json()
 
@@ -64,3 +61,17 @@ def fetch_league_standings(tid, page=1):
     """Fetch standings of a league, with pagination."""
     response = requests.get(f"{BASE_URL}/leagues-classic/{tid}/standings/", params={"page_standings": page})
     return response.json()
+
+def get_gameweek_history(playerid):
+    r = requests.get(BASE_URL + 'element-summary/' + str(player_id) + '/').json()
+    
+    # extract 'history' data from response into dataframe
+    df = pd.json_normalize(r['history'])
+    return df
+
+def get_season_history(player_id):
+    r = requests.get(BASE_URL + 'element-summary/' + str(player_id) + '/').json()
+    
+    # extract 'history_past' data from response into dataframe
+    df = pd.json_normalize(r['history_past'])
+    return df

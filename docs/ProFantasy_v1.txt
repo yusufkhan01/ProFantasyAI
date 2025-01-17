@@ -1,0 +1,21 @@
+Current changes
+1. Found an API to provide all data on players and teams
+2. Created the backend with python
+3. Designed an algorithm to sort each player by score
+4. Defined the rules to pick which players are chosen (100 million budget, 2 GK 5 DEF 5 MID 3 FWD)
+5. Displayed the best valued time based on the algorithm and rules
+
+Future version changes:
+- Sort displayed players by different orders
+- Add an input aspect to allow interaction
+- Develop the algorithm further or provide a choice for diff algorithms
+- Create the front end UI
+
+backend/app (6 files)
+    __init__.py
+    algorithm.py
+    fpl_api.py
+    main.py
+    routes.py
+    team_builder.py
+    utils.py
