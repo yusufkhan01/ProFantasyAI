@@ -1,0 +1,15 @@
+# Render Blueprint: deploys the FastAPI backend as a Docker web service.
+# Docs: https://render.com/docs/blueprint-spec
+services:
+  - type: web
+    name: profantasyai-api
+    runtime: docker
+    rootDir: backend
+    dockerfilePath: ./Dockerfile
+    plan: free
+    healthCheckPath: /api/health
+    autoDeploy: true
+    envVars:
+      # Set this to your Netlify site URL after the frontend is deployed.
+      - key: ALLOWED_ORIGINS
+        sync: false

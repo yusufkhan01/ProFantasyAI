@@ -1,0 +1,18 @@
+# Netlify configuration for the Vite frontend.
+[build]
+  base = "frontend"
+  command = "npm run build"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "22"
+  NPM_FLAGS = "--legacy-peer-deps"
+
+# Set VITE_API_BASE_URL (your Render backend URL) in the Netlify UI:
+# Site settings -> Environment variables.
+
+# Single-page app routing fallback.
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200

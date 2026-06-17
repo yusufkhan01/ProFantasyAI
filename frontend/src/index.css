@@ -1,0 +1,35 @@
+@import "tailwindcss";
+
+:root {
+  color-scheme: dark;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica,
+    Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Ambient emerald glow behind the dashboard. */
+.app-glow {
+  background: radial-gradient(60rem 40rem at 70% -10%, rgba(16, 185, 129, 0.12), transparent);
+}
+
+/* Football pitch backdrop with subtle mowed stripes. */
+.pitch-surface {
+  background-color: #157a3a;
+  background-image: repeating-linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.05) 0,
+    rgba(255, 255, 255, 0.05) 64px,
+    rgba(0, 0, 0, 0.05) 64px,
+    rgba(0, 0, 0, 0.05) 128px
+  );
+}
