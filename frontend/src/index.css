@@ -33,3 +33,39 @@ body {
     rgba(0, 0, 0, 0.05) 128px
   );
 }
+
+/* Modal entrance animations. */
+@keyframes pfa-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes pfa-pop-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.animate-fade-in {
+  animation: pfa-fade-in 0.15s ease-out;
+}
+
+.animate-pop-in {
+  animation: pfa-pop-in 0.18s ease-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-fade-in,
+  .animate-pop-in {
+    animation: none;
+  }
+}

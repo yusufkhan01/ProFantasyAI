@@ -1,5 +1,5 @@
 import type { Player, TeamMetrics } from '../types'
-import { formatMoney } from '../lib/format'
+import { formatMoney, positionLabel } from '../lib/format'
 import { StatCard } from './StatCard'
 import { BallIcon, SparklesIcon, TrophyIcon, WalletIcon } from './icons'
 
@@ -35,7 +35,11 @@ export function StatsSummary({ metrics, captain }: StatsSummaryProps) {
       <StatCard
         label="Captain"
         value={captain?.name ?? '-'}
-        hint={captain ? `${captain.team_short} - ${captain.value_score.toFixed(1)} value` : undefined}
+        hint={
+          captain
+            ? `${positionLabel(captain.position)} · ${captain.team_short} · ${captain.value_score.toFixed(1)}`
+            : undefined
+        }
         icon={<SparklesIcon className="h-5 w-5" />}
       />
     </div>

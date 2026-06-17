@@ -91,3 +91,20 @@ export function AlertIcon(props: IconProps) {
     </svg>
   )
 }
+
+export function CloseIcon(props: IconProps) {
+  return (
+    <svg {...base} {...props}>
+      <path d="M18 6 6 18M6 6l12 12" />
+    </svg>
+  )
+}
+
+export function InfoIcon(props: IconProps) {
+  return (
+    <svg {...base} {...props}>
+      <circle cx="12" cy="12" r="9" />
+      <path d="M12 11v5M12 8h.01" />
+    </svg>
+  )
+}
