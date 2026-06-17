@@ -1,5 +1,7 @@
 export type Position = 'GK' | 'DEF' | 'MID' | 'FWD'
 
+export type Season = '2025-26' | '2026-27'
+
 export interface Player {
   id: number
   name: string
@@ -15,10 +17,13 @@ export interface Player {
   ict_index: number
   selected_by_percent: number
   value_score: number
+  objective_points: number
   is_captain: boolean
 }
 
 export interface TeamMetrics {
+  season: Season
+  is_projection: boolean
   formation: string
   total_cost: number
   budget_remaining: number
@@ -27,6 +32,8 @@ export interface TeamMetrics {
 }
 
 export interface OptimalTeamResponse {
+  season: Season
+  is_projection: boolean
   starting_xi: Player[]
   bench: Player[]
   squad: Player[]

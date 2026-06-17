@@ -1,11 +1,11 @@
 import { useQuery } from '@tanstack/react-query'
 import { getOptimalTeam, getValueLeaders } from '../api/client'
-import type { Position } from '../types'
+import type { Position, Season } from '../types'
 
-export function useOptimalTeam() {
+export function useOptimalTeam(season: Season) {
   return useQuery({
-    queryKey: ['optimal-team'],
-    queryFn: getOptimalTeam,
+    queryKey: ['optimal-team', season],
+    queryFn: () => getOptimalTeam(season),
   })
 }
 

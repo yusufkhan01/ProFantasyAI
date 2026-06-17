@@ -30,3 +30,15 @@ FORMATION_BOUNDS: dict[str, tuple[int, int]] = {
     "FWD": (1, 3),
 }
 STARTING_XI_SIZE = 11
+
+# Seasons the optimiser can build a squad for.
+#
+# ``bootstrap-static`` always serves the *latest* season. While 2025/26 is the
+# most-recently-completed season it is the live payload, so ``SEASON_HISTORICAL``
+# is built from real results. ``SEASON_PREDICTED`` is the upcoming season, which
+# the FPL API does not publish until pre-season; until then we project it from the
+# latest completed season's underlying numbers.
+SEASON_HISTORICAL = "2025-26"
+SEASON_PREDICTED = "2026-27"
+DEFAULT_SEASON = SEASON_HISTORICAL
+SEASONS: tuple[str, ...] = (SEASON_HISTORICAL, SEASON_PREDICTED)

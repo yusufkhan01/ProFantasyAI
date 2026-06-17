@@ -13,8 +13,8 @@ settings = get_settings()
 app = FastAPI(
     title="ProFantasyAI API",
     description=(
-        "Builds the optimal Fantasy Premier League squad from live FPL data using a "
-        "normalised, weighted value model. Interactive docs available at /docs."
+        "Builds the points-maximising Fantasy Premier League squad from live FPL data for a chosen "
+        "season (actual or projected), solved exactly. Interactive docs available at /docs."
     ),
     version="1.0.0",
 )

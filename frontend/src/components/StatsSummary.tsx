@@ -9,6 +9,7 @@ interface StatsSummaryProps {
 }
 
 export function StatsSummary({ metrics, captain }: StatsSummaryProps) {
+  const projected = metrics.is_projection
   return (
     <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
       <StatCard
@@ -27,9 +28,9 @@ export function StatsSummary({ metrics, captain }: StatsSummaryProps) {
         icon={<WalletIcon className="h-5 w-5" />}
       />
       <StatCard
-        label="XI points"
-        value={String(metrics.starting_total_points)}
-        hint={`${metrics.squad_total_points} squad total`}
+        label={projected ? 'Proj. XI points' : 'XI points'}
+        value={String(Math.round(metrics.starting_total_points))}
+        hint={`${Math.round(metrics.squad_total_points)} squad total`}
         icon={<TrophyIcon className="h-5 w-5" />}
       />
       <StatCard
@@ -37,7 +38,7 @@ export function StatsSummary({ metrics, captain }: StatsSummaryProps) {
         value={captain?.name ?? '-'}
         hint={
           captain
-            ? `${positionLabel(captain.position)} · ${captain.team_short} · ${captain.value_score.toFixed(1)}`
+            ? `${positionLabel(captain.position)} · ${captain.team_short} · ${Math.round(captain.objective_points)} pts`
             : undefined
         }
         icon={<SparklesIcon className="h-5 w-5" />}

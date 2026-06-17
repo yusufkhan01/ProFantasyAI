@@ -1,4 +1,4 @@
-import type { OptimalTeamResponse, Player, Position } from '../types'
+import type { OptimalTeamResponse, Player, Position, Season } from '../types'
 
 const BASE_URL = (import.meta.env.VITE_API_BASE_URL ?? 'http://localhost:8000').replace(/\/$/, '')
 
@@ -19,8 +19,8 @@ async function request<T>(path: string): Promise<T> {
   return response.json() as Promise<T>
 }
 
-export function getOptimalTeam(): Promise<OptimalTeamResponse> {
-  return request<OptimalTeamResponse>('/api/optimal-team')
+export function getOptimalTeam(season: Season): Promise<OptimalTeamResponse> {
+  return request<OptimalTeamResponse>(`/api/optimal-team?season=${encodeURIComponent(season)}`)
 }
 
 export function getValueLeaders(limit = 10, position?: Position): Promise<Player[]> {

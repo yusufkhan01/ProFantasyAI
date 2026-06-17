@@ -30,6 +30,22 @@ def test_optimal_team_endpoint(client: TestClient) -> None:
     assert len(body["squad"]) == SQUAD_SIZE
     assert body["captain_id"]
     assert "formation" in body["metrics"]
+    assert body["is_projection"] is False
+    assert body["season"] == "2025-26"
+
+
+def test_optimal_team_predicted_season(client: TestClient) -> None:
+    response = client.get("/api/optimal-team", params={"season": "2026-27"})
+    assert response.status_code == 200
+    body = response.json()
+    assert body["season"] == "2026-27"
+    assert body["is_projection"] is True
+    assert body["metrics"]["squad_total_points"] > 0
+
+
+def test_optimal_team_rejects_invalid_season(client: TestClient) -> None:
+    response = client.get("/api/optimal-team", params={"season": "1999-00"})
+    assert response.status_code == 422
 
 
 def test_players_endpoint_with_filters(client: TestClient) -> None:

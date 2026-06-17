@@ -19,6 +19,7 @@ function makePlayer(overrides: Partial<Player> = {}): Player {
     ict_index: 250.4,
     selected_by_percent: 45.2,
     value_score: 88.3,
+    objective_points: 200,
     is_captain: false,
     ...overrides,
   }

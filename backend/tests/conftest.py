@@ -42,6 +42,7 @@ def make_bootstrap() -> dict:
                 pid += 1
                 total_points = 30 + (pid * 13) % 150  # 30..179
                 now_cost = 40 + (pid * 7) % 56  # 40..95 tenths (£4.0m-£9.5m)
+                cost_change_start = (pid % 7) - 3  # -3..+3 tenths of price drift
                 elements.append(
                     {
                         "id": pid,
@@ -51,6 +52,7 @@ def make_bootstrap() -> dict:
                         "element_type": element_type,
                         "team": tid,
                         "now_cost": now_cost,
+                        "cost_change_start": cost_change_start,
                         "total_points": total_points,
                         # FPL returns these as strings; the optimiser coerces them.
                         "form": str(round((pid % 9) * 0.7 + 0.3, 1)),
@@ -59,6 +61,10 @@ def make_bootstrap() -> dict:
                         "selected_by_percent": str(round((pid % 40) + 0.5, 1)),
                         "minutes": 200 + (pid % 30) * 30,
                         "status": "a",
+                        # Underlying numbers consumed by the projection model.
+                        "expected_goals_per_90": str(round((pid % 11) * 0.05, 2)),
+                        "expected_assists_per_90": str(round((pid % 8) * 0.04, 2)),
+                        "expected_goals_conceded_per_90": str(round(0.8 + (pid % 6) * 0.2, 2)),
                     }
                 )
 

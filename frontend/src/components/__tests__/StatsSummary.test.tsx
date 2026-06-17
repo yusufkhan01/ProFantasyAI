@@ -4,6 +4,8 @@ import { StatsSummary } from '../StatsSummary'
 import type { Player, TeamMetrics } from '../../types'
 
 const metrics: TeamMetrics = {
+  season: '2025-26',
+  is_projection: false,
   formation: '3-4-3',
   total_cost: 99.5,
   budget_remaining: 0.5,
@@ -26,6 +28,7 @@ const captain: Player = {
   ict_index: 300,
   selected_by_percent: 70,
   value_score: 92.1,
+  objective_points: 260,
   is_captain: true,
 }
 

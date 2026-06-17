@@ -41,6 +41,9 @@ function PlayerDetailModal({ player, onClose }: { player: Player; onClose: () =>
   }, [onClose])
 
   const style = positionStyle(player.position)
+  // Projected players carry an objective (expected points) that differs from
+  // their actual recorded total; historical and leaderboard players don't.
+  const isProjected = player.objective_points !== player.total_points
 
   return (
     <div
@@ -86,7 +89,13 @@ function PlayerDetailModal({ player, onClose }: { player: Player; onClose: () =>
         <div className="grid grid-cols-2 gap-2 p-5 sm:grid-cols-3">
           <Stat label="Price" value={formatMoney(player.price)} />
           <Stat label="Value score" value={player.value_score.toFixed(1)} />
-          <Stat label="Total points" value={String(player.total_points)} />
+          {isProjected ? (
+            <Stat label="Proj. points" value={player.objective_points.toFixed(1)} />
+          ) : null}
+          <Stat
+            label={isProjected ? '2025/26 points' : 'Total points'}
+            value={String(player.total_points)}
+          />
           <Stat label="Form" value={player.form.toFixed(1)} />
           <Stat label="Points / game" value={player.points_per_game.toFixed(1)} />
           <Stat label="ICT index" value={player.ict_index.toFixed(1)} />

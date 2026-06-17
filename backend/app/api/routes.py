@@ -5,11 +5,14 @@ from __future__ import annotations
 from fastapi import APIRouter, Depends, HTTPException, Query, status
 
 from app.config import Settings, get_settings
+from app.core.constants import DEFAULT_SEASON, SEASONS
 from app.models.schemas import HealthResponse, OptimalTeamResponse, Player
 from app.services.fpl_client import FPLClient, FPLClientError, get_fpl_client
 from app.services.optimizer import OptimizerError, build_optimal_team, value_leaders
 
 router = APIRouter()
+
+_SEASON_PATTERN = f"^({'|'.join(SEASONS)})$"
 
 
 @router.get("/health", response_model=HealthResponse, tags=["meta"])
@@ -19,11 +22,18 @@ async def health(settings: Settings = Depends(get_settings)) -> HealthResponse:
 
 
 @router.get("/optimal-team", response_model=OptimalTeamResponse, tags=["squad"])
-async def optimal_team(client: FPLClient = Depends(get_fpl_client)) -> OptimalTeamResponse:
-    """Build and return the optimal squad, starting XI, formation and captain."""
+async def optimal_team(
+    client: FPLClient = Depends(get_fpl_client),
+    season: str = Query(
+        DEFAULT_SEASON,
+        pattern=_SEASON_PATTERN,
+        description="Season to build; past = actual points, future = projected.",
+    ),
+) -> OptimalTeamResponse:
+    """Build and return the points-maximising squad, starting XI, formation and captain."""
     try:
         bootstrap = await client.get_bootstrap()
-        return build_optimal_team(bootstrap)
+        return build_optimal_team(bootstrap, season=season)
     except FPLClientError as exc:
         raise HTTPException(status_code=status.HTTP_502_BAD_GATEWAY, detail=str(exc)) from exc
     except OptimizerError as exc:
