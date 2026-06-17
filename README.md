@@ -2,13 +2,6 @@
 
 > Builds the mathematically optimal Fantasy Premier League squad from live data, then visualises it on an interactive pitch.
 
-[![CI](https://github.com/yusufkhan01/ProFantasyAI/actions/workflows/ci.yml/badge.svg)](https://github.com/yusufkhan01/ProFantasyAI/actions/workflows/ci.yml)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-![Python](https://img.shields.io/badge/Python-3.12-3776AB?logo=python&logoColor=white)
-![FastAPI](https://img.shields.io/badge/FastAPI-009688?logo=fastapi&logoColor=white)
-![React](https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=black)
-![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?logo=typescript&logoColor=white)
-
 ProFantasyAI pulls every player from the official Fantasy Premier League (FPL) API and assembles the
 **points-maximising** legal 15-man squad for a chosen season under the real FPL constraints — solved
 exactly, not greedily. It then selects the optimal starting XI, formation and captain, and serves it
@@ -23,7 +16,6 @@ Two seasons are available:
   from 2025/26 underlying numbers (since the upcoming season isn't published by the FPL API yet).
 
 **Live demo:** _Frontend_ — `https://<your-site>.netlify.app` · _API docs (Swagger)_ — `https://<your-api>.onrender.com/docs`
-<!-- These URLs are filled in once the app is deployed (see Deployment). -->
 
 ---
 
@@ -38,38 +30,6 @@ Two seasons are available:
 - **Interactive dashboard** — the XI rendered on a football pitch, a stats summary, the bench, and a "best value players" ranking.
 - **Auto-generated API docs** — interactive Swagger UI at `/docs` and OpenAPI at `/openapi.json`.
 - **Production-minded** — typed end to end, unit/integration tested, linted, containerised, and CI-checked.
-
-## Screenshots
-
-<!-- Add a screenshot of the running dashboard, then enable the line below: -->
-<!-- ![ProFantasyAI dashboard](docs/screenshots/dashboard.png) -->
-
-The dashboard shows the optimal starting XI on a pitch (colour-coded by position, with a captain badge),
-a stats bar (formation, squad cost, money in the bank, projected points, captain), the four-man bench, and a
-ranked list of the best value-for-money players.
-
-## Architecture
-
-```mermaid
-flowchart LR
-  subgraph client [Frontend - Netlify]
-    UI["React + TypeScript + Tailwind<br/>TanStack Query"]
-  end
-  subgraph server [Backend - Render]
-    API["FastAPI<br/>/api/* + /docs"]
-    OPT["Optimizer service<br/>scoring -> squad -> XI"]
-    CACHE["httpx client + TTL cache"]
-  end
-  FPL["Official FPL API"]
-  UI -->|"HTTPS JSON"| API
-  API --> OPT
-  OPT --> CACHE
-  CACHE -->|"on cache miss"| FPL
-```
-
-The frontend is a static SPA that talks to the FastAPI backend over JSON. The backend keeps no database:
-it fetches the FPL `bootstrap-static` payload (cached), runs the pure-Python optimiser, and returns typed
-responses validated by Pydantic.
 
 ## Tech stack
 
@@ -151,43 +111,6 @@ ProFantasyAI/
 └── netlify.toml             # frontend deploy config
 ```
 
-## Getting started
-
-### Prerequisites
-
-- Python 3.11+ and Node.js 20+ (for the manual setup), **or**
-- Docker (for the one-command setup).
-
-### Option A - Docker (one command)
-
-```bash
-docker compose up --build
-```
-
-- Frontend: http://localhost:8080
-- API + Swagger docs: http://localhost:8000/docs
-
-### Option B - Run locally
-
-**Backend**
-
-```bash
-cd backend
-python -m venv venv && source venv/bin/activate   # Windows: venv\Scripts\activate
-pip install -r requirements-dev.txt
-cp .env.example .env                               # optional: tweak CORS / cache
-uvicorn app.main:app --reload                      # http://localhost:8000/docs
-```
-
-**Frontend** (in a second terminal)
-
-```bash
-cd frontend
-npm install
-cp .env.example .env                               # VITE_API_BASE_URL=http://localhost:8000
-npm run dev                                        # http://localhost:5173
-```
-
 ## API reference
 
 Base path: `/api`. Full interactive documentation is available at `/docs`.
@@ -212,15 +135,6 @@ npm run lint && npm run typecheck && npm run test && npm run build
 
 All checks also run automatically on every push and pull request via [GitHub Actions](.github/workflows/ci.yml).
 
-## Deployment
-
-The app is designed as two decoupled services:
-
-- **Backend → Render** using [`render.yaml`](render.yaml) (Docker web service). Set `ALLOWED_ORIGINS` to your Netlify URL.
-- **Frontend → Netlify** using [`netlify.toml`](netlify.toml). Set `VITE_API_BASE_URL` to your Render API URL.
-
-See the step-by-step [deployment guide](docs/DEPLOYMENT.md) for the full walkthrough. After deploying, fill the
-live URLs into the demo links at the top of this README.
 
 ## Roadmap
 
@@ -230,10 +144,3 @@ live URLs into the demo links at the top of this README.
 - Validate/back-test the projection model and expose tunable weights and multiple scoring models.
 - Player search, comparison and filtering.
 - Historical gameweek analysis and transfer suggestions.
-
-## License
-
-Released under the [MIT License](LICENSE).
-
-ProFantasyAI is an independent project and is not affiliated with, endorsed by, or associated with the
-Premier League or the Fantasy Premier League. Player data belongs to its respective owners.
