@@ -5,7 +5,9 @@ import { SeasonTabs } from './components/SeasonTabs'
 import { StatsSummary } from './components/StatsSummary'
 import { Pitch } from './components/Pitch'
 import { Bench } from './components/Bench'
+import { TeamTracker } from './components/TeamTracker'
 import { ValueLeaders } from './components/ValueLeaders'
+import { SquadBuilderBanner } from './components/SquadBuilderBanner'
 import { Loader } from './components/Loader'
 import { ErrorState } from './components/ErrorState'
 import { PlayerDetailProvider } from './components/PlayerDetail'
@@ -39,6 +41,10 @@ export default function App() {
           <Header onRefresh={() => void refetch()} isRefreshing={isFetching} />
 
           <main className="mx-auto max-w-6xl px-4 py-6 sm:px-6 sm:py-8">
+            <div className="mb-6">
+              <SquadBuilderBanner />
+            </div>
+
             <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
               <div className="min-w-0">
                 <h2 className="flex flex-wrap items-center gap-2 text-xl font-bold text-white">
@@ -69,7 +75,10 @@ export default function App() {
                     <Pitch players={data.starting_xi} />
                     <Bench players={data.bench} />
                   </div>
-                  <ValueLeaders />
+                  <div className="space-y-6">
+                    <TeamTracker squad={data.squad} />
+                    <ValueLeaders />
+                  </div>
                 </div>
               </div>
             ) : null}

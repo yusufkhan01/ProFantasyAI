@@ -10,6 +10,7 @@ export interface Player {
   team_id: number
   team: string
   team_short: string
+  team_code: number
   price: number
   total_points: number
   form: number

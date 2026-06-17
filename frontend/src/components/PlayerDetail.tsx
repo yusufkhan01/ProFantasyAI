@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState, type ReactNode } from 'react'
 import type { Player } from '../types'
 import { formatMoney, formatPercent, positionLabel, positionStyle } from '../lib/format'
 import { CloseIcon } from './icons'
+import { TeamCrest } from './TeamCrest'
 import { PlayerDetailContext } from './playerDetailContext'
 
 /**
@@ -58,23 +59,31 @@ function PlayerDetailModal({ player, onClose }: { player: Player; onClose: () =>
         onClick={(event) => event.stopPropagation()}
       >
         <div className="flex items-start justify-between gap-3 border-b border-white/10 p-5">
-          <div className="min-w-0">
-            <div className="mb-2 flex flex-wrap items-center gap-1.5">
-              <span
-                className={`rounded-full border px-2 py-0.5 text-[11px] font-bold uppercase tracking-wide ${style.soft} ${style.text} ${style.border}`}
-              >
-                {positionLabel(player.position)}
-              </span>
-              {player.is_captain ? (
-                <span className="rounded-full bg-amber-400/15 px-2 py-0.5 text-[11px] font-bold uppercase tracking-wide text-amber-300">
-                  Captain
+          <div className="flex min-w-0 items-start gap-3">
+            <TeamCrest
+              code={player.team_code}
+              team={player.team}
+              teamShort={player.team_short}
+              className="mt-0.5 h-10 w-10"
+            />
+            <div className="min-w-0">
+              <div className="mb-2 flex flex-wrap items-center gap-1.5">
+                <span
+                  className={`rounded-full border px-2 py-0.5 text-[11px] font-bold uppercase tracking-wide ${style.soft} ${style.text} ${style.border}`}
+                >
+                  {positionLabel(player.position)}
                 </span>
-              ) : null}
+                {player.is_captain ? (
+                  <span className="rounded-full bg-amber-400/15 px-2 py-0.5 text-[11px] font-bold uppercase tracking-wide text-amber-300">
+                    Captain
+                  </span>
+                ) : null}
+              </div>
+              <h2 className="truncate text-xl font-bold text-white">{player.full_name}</h2>
+              <p className="mt-0.5 text-sm text-slate-400">
+                {player.team} <span className="text-slate-500">({player.team_short})</span>
+              </p>
             </div>
-            <h2 className="truncate text-xl font-bold text-white">{player.full_name}</h2>
-            <p className="mt-0.5 text-sm text-slate-400">
-              {player.team} <span className="text-slate-500">({player.team_short})</span>
-            </p>
           </div>
           <button
             type="button"

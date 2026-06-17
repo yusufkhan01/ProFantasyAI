@@ -21,6 +21,7 @@ const captain: Player = {
   team_id: 13,
   team: 'Man City',
   team_short: 'MCI',
+  team_code: 43,
   price: 15,
   total_points: 260,
   form: 8.2,

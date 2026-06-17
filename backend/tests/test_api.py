@@ -32,6 +32,9 @@ def test_optimal_team_endpoint(client: TestClient) -> None:
     assert "formation" in body["metrics"]
     assert body["is_projection"] is False
     assert body["season"] == "2025-26"
+    # Each player carries the stable club code (sourced from teams[].code, not id)
+    # that the frontend uses to render crest images.
+    assert all(player["team_code"] >= 100 for player in body["squad"])
 
 
 def test_optimal_team_predicted_season(client: TestClient) -> None:

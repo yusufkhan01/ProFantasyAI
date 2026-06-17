@@ -17,6 +17,9 @@ class Player(BaseModel):
     team_id: int
     team: str
     team_short: str
+    team_code: int = Field(
+        0, description="Stable FPL club code (distinct from team_id) used for crest image URLs."
+    )
     price: float = Field(..., description="Price in millions for the active season, e.g. 12.5.")
     total_points: int = Field(..., description="Actual points scored in the latest season.")
     form: float

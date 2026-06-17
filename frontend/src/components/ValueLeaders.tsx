@@ -3,6 +3,7 @@ import { useValueLeaders } from '../hooks/useFplData'
 import { POSITION_LIST, positionStyle } from '../lib/format'
 import type { Position } from '../types'
 import { ChartIcon } from './icons'
+import { TeamCrest } from './TeamCrest'
 import { usePlayerDetail } from './playerDetailContext'
 
 type Filter = Position | 'ALL'
@@ -77,7 +78,15 @@ export function ValueLeaders() {
                         <span className="truncate text-sm font-medium text-slate-200">
                           {player.name}
                         </span>
-                        <span className="shrink-0 text-xs text-slate-500" title={player.team}>
+                        <span
+                          className="flex shrink-0 items-center gap-1 text-xs text-slate-500"
+                          title={player.team}
+                        >
+                          <TeamCrest
+                            code={player.team_code}
+                            team={player.team}
+                            className="h-4 w-4"
+                          />
                           {player.team_short}
                         </span>
                       </span>

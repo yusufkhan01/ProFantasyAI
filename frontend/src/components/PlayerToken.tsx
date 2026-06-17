@@ -1,5 +1,6 @@
 import type { Player } from '../types'
 import { formatMoney, positionLabel, positionStyle } from '../lib/format'
+import { TeamCrest } from './TeamCrest'
 import { usePlayerDetail } from './playerDetailContext'
 
 interface PlayerTokenProps {
@@ -37,10 +38,11 @@ export function PlayerToken({ player, compact = false }: PlayerTokenProps) {
 
       <span className="block w-full truncate text-sm font-semibold text-white">{player.name}</span>
       <span
-        className="block w-full truncate text-[11px] font-medium uppercase tracking-wide text-slate-400"
+        className="flex w-full items-center justify-center gap-1 text-[11px] font-medium uppercase tracking-wide text-slate-400"
         title={player.team}
       >
-        {player.team_short || player.team}
+        <TeamCrest code={player.team_code} team={player.team} className="h-3.5 w-3.5" />
+        <span className="truncate">{player.team_short || player.team}</span>
       </span>
 
       <div className="mt-1.5 flex w-full items-center justify-between gap-1 text-[11px]">

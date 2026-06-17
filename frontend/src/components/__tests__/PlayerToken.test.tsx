@@ -12,6 +12,7 @@ function makePlayer(overrides: Partial<Player> = {}): Player {
     team_id: 12,
     team: 'Liverpool',
     team_short: 'LIV',
+    team_code: 14,
     price: 12.5,
     total_points: 200,
     form: 7.5,

@@ -103,9 +103,14 @@ def _to_int(value: Any) -> int:
         return 0
 
 
-def _parse(bootstrap: dict[str, Any]) -> tuple[list[Candidate], dict[int, dict[str, str]]]:
-    teams = {
-        team["id"]: {"name": team.get("name", "Unknown"), "short": team.get("short_name", "")}
+def _parse(bootstrap: dict[str, Any]) -> tuple[list[Candidate], dict[int, dict[str, Any]]]:
+    teams: dict[int, dict[str, Any]] = {
+        team["id"]: {
+            "name": team.get("name", "Unknown"),
+            "short": team.get("short_name", ""),
+            # Stable club code (distinct from the season id) used for crest images.
+            "code": _to_int(team.get("code")),
+        }
         for team in bootstrap.get("teams", [])
     }
 
@@ -423,9 +428,9 @@ def _pick_starting_xi(
 
 
 def _to_player(
-    candidate: Candidate, teams: dict[int, dict[str, str]], *, is_captain: bool = False
+    candidate: Candidate, teams: dict[int, dict[str, Any]], *, is_captain: bool = False
 ) -> Player:
-    team = teams.get(candidate.team_id, {"name": "Unknown", "short": "UNK"})
+    team = teams.get(candidate.team_id, {"name": "Unknown", "short": "UNK", "code": 0})
     return Player(
         id=candidate.id,
         name=candidate.name,
@@ -434,6 +439,7 @@ def _to_player(
         team_id=candidate.team_id,
         team=team["name"],
         team_short=team["short"],
+        team_code=int(team.get("code", 0)),
         price=round(candidate.cost_tenths / COST_DIVISOR, 1),
         total_points=candidate.total_points,
         form=candidate.form,

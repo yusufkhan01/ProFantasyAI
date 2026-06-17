@@ -30,7 +30,8 @@ _NUM_CLUBS = 8
 def make_bootstrap() -> dict:
     """Build a deterministic synthetic FPL bootstrap payload."""
     teams = [
-        {"id": tid, "name": f"Club {tid}", "short_name": f"C{tid:02d}"}
+        # ``code`` is the club's stable FPL code, deliberately distinct from ``id``.
+        {"id": tid, "name": f"Club {tid}", "short_name": f"C{tid:02d}", "code": 100 + tid}
         for tid in range(1, _NUM_CLUBS + 1)
     ]
 
